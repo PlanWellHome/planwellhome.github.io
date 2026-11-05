@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>How Long Will My Savings Last? Free Calculator | PlanWellHome</title>
+<meta name="description" content="Free calculator: type your savings and monthly spending to see how many months they cover and the month they would run out.">
+<link rel="canonical" href="https://planwellhome.github.io/tools/savings-runway/">
+<meta property="og:title" content="How Long Will My Savings Last? Free Calculator | PlanWellHome">
+<meta property="og:description" content="Free calculator: type your savings and monthly spending to see how many months they cover and the month they would run out.">
+<meta property="og:url" content="https://planwellhome.github.io/tools/savings-runway/">
+<meta property="og:site_name" content="PlanWellHome">
+<meta property="og:type" content="article">
+<link rel="alternate" type="application/rss+xml" title="PlanWellHome" href="https://planwellhome.github.io/feed.xml">
+<meta name="p:domain_verify" content="c3df4222cb172db545222e5be6d88c00"><link rel="icon" href="/img/icon.png"><style>
+@font-face{font-family:Fraunces;src:url(/fonts/fraunces-latin-700-normal.woff2) format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:Inter;src:url(/fonts/inter-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Inter;src:url(/fonts/inter-latin-700-normal.woff2) format('woff2');font-weight:700;font-display:swap}
+:root{--deep:#1E4B3A;--ink:#22302A;--muted:#5B6B63;--gold:#D9A441;--coral:#C8775A;--cream:#FBF4EA;--card:#fff;--line:#E8DDCC}
+@media (prefers-color-scheme:dark){:root{--ink:#EDE6DA;--muted:#B7C2BB;--cream:#14201B;--card:#1C2A24;--line:#2E3F37}}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.6 Inter,system-ui,sans-serif}
+a{color:inherit}img{max-width:100%;display:block;border-radius:14px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header.top{background:var(--deep);color:#fff}header.top .wrap{display:flex;align-items:center;gap:12px;padding:16px 20px}
+header.top a{text-decoration:none;font-family:Fraunces,serif;font-size:24px}
+.hero{padding:56px 0 24px}.hero h1{font-family:Fraunces,serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin:0 0 12px}
+.hero p{color:var(--muted);max-width:720px;margin:0}
+h2{font-family:Fraunces,serif;font-size:30px;margin:48px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;text-decoration:none;display:flex;flex-direction:column;gap:8px}
+.card h3{font-size:18px;margin:4px 0 0}.card p{margin:0;color:var(--muted);font-size:15px}
+.btn{display:inline-block;background:var(--coral);color:#fff;text-decoration:none;font-weight:700;padding:14px 26px;border-radius:40px;margin:18px 0}
+.product h1{font-family:Fraunces,serif;font-size:clamp(30px,4.5vw,46px);line-height:1.1;margin:36px 0 8px}
+.product .lead{font-size:20px;color:var(--muted);max-width:760px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin:24px 0}
+ul.check{padding-left:0;list-style:none}ul.check li{padding-left:30px;position:relative;margin:6px 0}
+ul.check li:before{content:"\2713";position:absolute;left:0;color:var(--coral);font-weight:700}
+.fmt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:20px 0}
+footer{margin-top:64px;padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+</style></head><body>
+<header class="top"><div class="wrap"><img src="/img/icon.png" alt="" width="36" height="36" style="border-radius:8px">
+<a href="/">PlanWellHome</a></div></header><main class="wrap">
+<section class="product"><h1>How long will my savings last?</h1>
+<p class="lead">Type what you have saved and what you spend each month. See how many months your savings cover, and the month they would run out.</p>
+<div class="calc" id="calc">
+  <div class="row">
+    <div><label for="sav">Savings you can use<small>cash, checking, savings</small></label><input id="sav" inputmode="decimal" value="12,000"><div class="hint" id="sav_h"></div></div>
+    <div><label for="spend">Monthly spending<small>rent, bills, food, everything</small></label><input id="spend" inputmode="decimal" value="3,200"><div class="hint" id="spend_h"></div></div>
+  </div>
+  <div class="row">
+    <div><label for="inc">Money still coming in each month<small>part-time pay, benefits; 0 if none</small></label><input id="inc" inputmode="decimal" value="1,000"><div class="hint" id="inc_h"></div></div>
+    <div><label for="one">A one-off cost coming up (optional)<small>a move, a car repair; taken out at the start</small></label><input id="one" inputmode="decimal" value="0"><div class="hint" id="one_h"></div></div>
+  </div>
+  <div class="row"><div><label for="start">Starting month</label><select id="start"></select></div></div>
+  <div class="result" id="res" aria-live="polite"></div>
+</div>
+<p class="muted">An estimate for planning only, not financial advice. It assumes the same spending and income every month and no interest.
+Nothing you type leaves this page.</p>
+<div class="cta"><h2>Want the full planner?</h2>
+<p>Once you know your runway, plan the money you will need for the big things: the <b>Sinking Funds Tracker</b> works out what to set aside each month
+for every goal, and the <b>Net Worth &amp; Savings Goals Tracker</b> follows your savings over the year.</p>
+<div class="btns"><a class="btn" href="https://www.etsy.com/listing/4605720348">See the Sinking Funds Tracker on Etsy</a>
+<a class="btn alt" href="https://www.etsy.com/listing/4605721112">Net Worth &amp; Savings Goals Tracker</a></div></div></section>
+<style>
+.calc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:24px 0;max-width:760px}
+.calc label{display:block;font-weight:700;margin:14px 0 4px}.calc small{display:block;color:var(--muted);font-weight:400;font-size:14px}
+.calc input,.calc select{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--cream);color:var(--ink);min-height:48px}
+.calc input.bad{border-color:var(--coral)}.hint{color:var(--coral);font-size:14px;min-height:18px;margin-top:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}@media (max-width:600px){.row{grid-template-columns:1fr}}
+.result{margin-top:22px;padding:18px;border-radius:14px;background:var(--cream);border:1px solid var(--line)}
+.result .big{font-family:Fraunces,serif;font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 6px}
+.result p{margin:6px 0}.muted{color:var(--muted);font-size:15px}
+.cap{font-weight:700;font-size:15px;margin:16px 0 0}
+.bars{display:flex;align-items:flex-end;gap:3px;height:120px;margin:8px 0 4px}.bars div{flex:1;background:var(--gold);border-radius:4px 4px 0 0;min-height:2px}
+.bars div.now{background:var(--ink)}.bars div.out{background:var(--coral)}.axis{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+details{margin-top:10px}summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+table.mm{border-collapse:collapse;width:100%;font-size:15px}table.mm td{padding:4px 6px;border-bottom:1px solid var(--line)}table.mm td+td{text-align:right}
+.cta{border-top:1px solid var(--line);margin-top:28px;padding-top:8px}.cta .btns{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta .btn{margin:8px 0;min-height:44px;box-sizing:border-box}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:12px 24px}
+footer a{display:inline-block;padding:12px 0}header.top a{display:inline-flex;align-items:center;min-height:44px}   /* tap targets (QA 11-05); the site template should get these too */
+@media (max-width:600px){.cta .btns{flex-direction:column;align-items:stretch}.cta .btn{text-align:center}}
+</style>
+<script>
+const $ = id => document.getElementById(id);
+// US numbers only: 12000, 12,000, $12,000.50, 12k, 1.5m. Anything else (letters, 1.234,56, negatives) is NaN, never a silent guess.
+function num(v) {
+  let s = String(v).trim().toLowerCase().replace(/^\$/, '').replace(/\s/g, '');
+  if (s === '') return 0;
+  let k = 1;
+  if (/[km]$/.test(s)) { k = s.endsWith('k') ? 1e3 : 1e6; s = s.slice(0, -1); }
+  if (!/^(\d{1,3}(,\d{3})+|\d+)(\.\d+)?$|^\.\d+$/.test(s)) return NaN;
+  return parseFloat(s.replace(/,/g, '')) * k;
+}
+const usd = n => (Math.abs(n) < 10 && n % 1 ? '$' + n.toFixed(2) : '$' + Math.round(n).toLocaleString('en-US'));
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const mname = (y, m) => { const d = new Date(y, m, 1); return MONTHS[d.getMonth()] + ' ' + d.getFullYear(); };
+
+const now = new Date();
+for (let k = 0; k < 12; k++) { const d = new Date(now.getFullYear(), now.getMonth() + k, 1);
+  $('start').add(new Option(MONTHS[d.getMonth()] + ' ' + d.getFullYear(), d.getFullYear() + '-' + d.getMonth())); }
+const CAP = 600;                                 // 50 years: beyond this a date means nothing
+function runway(sav, spend, inc, one) {          // months covered (real), whole months, balance at each month end
+  const gap = spend - inc, left = sav - (one || 0);
+  if (gap <= 0) return {inf: true, gap, left, path: []};
+  if (left <= 0) return {nosav: true, gap, left, months: 0, full: 0, path: []};
+  const months = left / gap, full = Math.floor(months + 1e-9), path = [];
+  for (let m = 1; m <= Math.min(36, Math.ceil(months - 1e-9)); m++) path.push(Math.max(0, left - gap * m));
+  return {months, full, exact: Math.abs(months - Math.round(months)) < 1e-9, capped: months > CAP, gap, left, path};
+}
+function read(id) {                              // value + an inline note instead of a silent guess
+  const v = num($(id).value), bad = isNaN(v) || v < 0;
+  $(id).classList.toggle('bad', bad);
+  $(id + '_h').textContent = bad ? 'Numbers only, like 12000, 12,000 or 12k' : '';
+  return bad ? null : v;
+}
+function render() {
+  const sav = read('sav'), spend = read('spend'), inc = read('inc'), one = read('one'), res = $('res');
+  if ([sav, spend, inc, one].includes(null)) { res.innerHTML = '<p>Fix the highlighted box to see the result.</p>'; return; }
+  if (spend <= 0) { res.innerHTML = '<p>Type your monthly spending to see the result.</p>'; return; }
+  const [y, mo] = $('start').value.split('-').map(Number), r = runway(sav, spend, inc, one);
+  if (r.inf) {
+    res.innerHTML = '<p class="big">Your savings won\'t shrink</p><p>Money coming in (' + usd(inc) + ') covers your spending (' + usd(spend) + ')'
+      + (r.gap < 0 ? ', so your savings could grow by about ' + usd(-r.gap) + ' a month.' : ', so your savings stay where they are.') + '</p>';
+    return;
+  }
+  if (r.nosav) {
+    res.innerHTML = '<p class="big">No savings to draw on yet</p><p>' + (one > 0 && sav > 0 ? 'The one-off cost uses up your savings. ' : '')
+      + 'Each month you are short ' + usd(r.gap) + '.</p>';
+    return;
+  }
+  if (r.capped) {
+    res.innerHTML = '<p class="big">More than 50 years</p><p>You use ' + usd(r.gap) + ' of savings a month, so at this rate they last more than 50 years.</p>';
+    return;
+  }
+  const m1 = r.months < 10 ? Math.round(r.months * 10) / 10 : Math.round(r.months);
+  const yrs = r.months >= 24 ? ` (about ${(r.months / 12).toFixed(1)} years)` : '';
+  const head = r.months < 1 ? 'Less than 1 month' : `${m1} month${m1 === 1 ? '' : 's'}${yrs}`;
+  const when = r.exact ? `they last through <b>${mname(y, mo + r.full - 1)}</b>` : `they run out during <b>${mname(y, mo + r.full)}</b>`;
+  const all = [r.left].concat(r.path), shown = all.slice(0, 37);
+  const bars = shown.map((b, i) => `<div class="${i === 0 ? 'now' : b <= 0 ? 'out' : ''}" style="height:${Math.max(2, b / r.left * 100)}%"></div>`).join('');
+  const open = !!document.querySelector('#res details[open]');   // keep the table open while typing
+  const rows = r.path.map((b, i) => `<tr><td>End of ${mname(y, mo + i)}</td><td>${usd(b)}</td></tr>`).join('');
+  res.innerHTML = `<p class="big">${head}</p>
+    <p>You use <b>${usd(r.gap)}</b> of savings a month, so ${when}.</p>
+    <p class="cap">Savings left at the end of each month</p>
+    <div class="bars" aria-hidden="true">${bars}</div><div class="axis"><span>Now (${usd(r.left)})</span><span>End of ${mname(y, mo + shown.length - 2)}</span></div>
+    <details${open ? ' open' : ''}><summary>Show month by month &#9662;</summary><table class="mm">${rows}</table>${r.path.length >= 36 ? '<p class="muted">First 36 months shown.</p>' : ''}</details>
+    <p class="muted">At this rate, 3 months of the gap add up to ${usd(r.gap * 3)} and 6 months to ${usd(r.gap * 6)}.</p>`;
+}
+['sav', 'spend', 'inc', 'one'].forEach(id => $(id).addEventListener('input', render));
+$('start').addEventListener('change', render);
+document.querySelectorAll('#calc input').forEach(i => i.addEventListener('blur', () => {
+  const n = num(i.value); if (!isNaN(n) && n >= 0) i.value = n ? n.toLocaleString('en-US') : '0'; render(); }));
+render();
+</script></main>
+<footer><div class="wrap">PlanWellHome makes templates, planners and printables for home and office, sold as instant
+downloads on <a href="https://planwellhome.etsy.com">our Etsy shop</a>. Templates, guides and images are created with the help of AI
+tools, then checked before release.</div></footer><script data-goatcounter="https://planwellhome.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>
